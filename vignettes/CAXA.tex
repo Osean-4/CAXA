@@ -1,0 +1,17 @@
+%\VignetteIndexEntry{A Tutorial for CAXA}
+\documentclass{article}
+
+\usepackage{Sweave}
+\begin{document}
+\input{CAXA-concordance}
+
+Remove.WRSH.ZEDO(cax_data) will return a dataframe with all experiments containing track species wrsh and zedo removed
+
+Keep.15.Track(cax_data_1) will return a dataframe with only experiments containing track lengths equal to 15 minutes
+
+GLMM.RM.Bin(cax_data_2) will return a summary of coefficients from a generalized linear mixed model applied to track species jawe
+\begin{Schunk}
+\begin{Sinput}
+> library(tidyverse)
+> library(lme4)
+> library(CAXA)

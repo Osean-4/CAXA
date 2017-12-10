@@ -1,0 +1,45 @@
+%\VignetteIndexEntry{A Tutorial for CAXA}
+\documentclass{article}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+Remove.WRSH.ZEDO(cax_data) will return a dataframe with all experiments containing track species wrsh and zedo removed
+
+Keep.15.Track(cax_data_1) will return a dataframe with only experiments containing track lengths equal to 15 minutes
+
+GLMM.RM.Bin(cax_data_2) will return a summary of coefficients from a generalized linear mixed model applied to track species jawe
+<<>>=
+library(tidyverse)
+library(lme4)
+library(CAXA)
+data(cax_data)
+## Remove all experiments with wrsh or zedo as track species
+Remove.WRSH.ZEDO <- function (cax_data){
+  cax_data %>%
+  group_by(experiment) %>%
+  filter(!any(track.spp == "wrsh")) %>%
+  filter(!any(track.spp == "zedo"))
+  return(cax_data_1)
+}
+
+## Keep only experiments with all trials of track lengths equal to 15 minutes
+Keep.15.Tracks <- function(cax_data_1){
+  cax_data_1 <- Remove.WRSH.ZEDO(cax_data)
+  cax_data_1 %>%
+  group_by(experiment) %>%
+  filter(!any(track.length != "15"))
+  return(cax_data_2)
+}
+
+## Apply a generalized linear mixed model with repeated measures and a binomial distribution
+## For each glmm have bird species as response variable; track species, breeding season, and plant origin as fixed effects; order as random effect
+GLMM.RM.Bin <- function(species){
+  cax_data_2 <- Keep.15.Tracks(cax_data_1)
+  species <- cax_data_2$jawe
+  model <- glmer(species ~ track.spp + breeding.season + native.plant + (1 | track.order), data = cax_data_2, family = binomial)
+  summary(model)
+}
+@
+
+\end{document}

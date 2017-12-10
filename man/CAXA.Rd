@@ -38,8 +38,8 @@ data(cax_data)
 ## Remove all experiments with wrsh or zedo as track species
 Remove.WRSH.ZEDO <- function (cax_data){
   cax_data \%>\%
-  group_by(experiment) \%>\%
-  filter(!any(track.spp == "wrsh")) \%>\%
+  group_by(experiment) %>%
+  filter(!any(track.spp == "wrsh")) %>%
   filter(!any(track.spp == "zedo"))
   return(cax_data_1)
 }
