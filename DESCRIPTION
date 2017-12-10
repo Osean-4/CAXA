@@ -1,11 +1,10 @@
-Package: CAXanal
+Package: CAXA
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Conspecific Attraction Experiment Analysis
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Author: Sean E. MacDonald
+Maintainer: Sean E. MacDonald <erroll4@illinois.edu>
+Description: The package contains three functions that clean the data of any unwanted experiments. Firstly, data containing trials of the species White-rumped shama and Zebra dove are removed due to low sampling effort. Secondly, data containing trials not equal to 15 minutes are removed due to low sampling effort. Lastly, a generalized linear mixed model is applied to the data.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

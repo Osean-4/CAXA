@@ -1,4 +1,4 @@
-\name{CAXanal}
+\name{CAXA}
 \alias{Remove.WRSH.ZEDO}
 \alias{Keep.15.Track}
 \alias{GLMM.RM.Bin}
