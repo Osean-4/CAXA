@@ -37,7 +37,8 @@ GLMM.Bin(cax_data_2) will return a summary of coefficients from a generalized li
 library(CAXA)
 library(lme4)
 library(tidyverse)
-data(cax_data)
+mypath <- system.file("extdata", "cax_data.csv", package = "CAXA")
+cax_data <- read.table(mypath)
 ## Remove all experiments with wrsh or zedo as track species
 cax_data_1 <- Remove.WRSH.ZEDO(cax_data)
 
