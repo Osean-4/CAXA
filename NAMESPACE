@@ -1,2 +1,4 @@
-export(Remove.WRSH.ZEDO, Keep.15.Tracks, GLMM.RM.Bin)
-importfrom(tidyverse, lme4)
+export(Remove.WRSH.ZEDO, Keep.15.Tracks, GLMM.Bin)
+import(lme4)
+import(tidyverse)
+importFrom("stats", "binomial", "filter")
