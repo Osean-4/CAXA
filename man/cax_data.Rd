@@ -5,7 +5,7 @@
 Conspecific Attraction Experiment (cax) Data for Fruit-eating Birds
 }
 \description{
-The dataframe is a series of 80 experiments with control and treatment periods. Control periods did not include a speaker. During treatment periods bird species' tracks were broadcasted in various orders and lengths (min). Whether or not the experiment was conducted during the bird's breeding season (0 = no, 1 = yes), on a native plant species (0 = no, 1 = yes), and the behavioral response of fruit-eating birds (0 = no response, 1 = attracted) are included. Japanese white-eye (jawe), Red-billed leiothrix (rble), Red-vented bulbul (rvbu), Red-whiskered bulbul (rwbu), and all non-fruit eating species (other).
+The dataframe is a series of 80 experiments with control and treatment periods. Control periods did not include a speaker. During treatment periods bird species' tracks were broadcasted in various orders and lengths (min). Whether or not the experiment was conducted during the bird's breeding season (0 = no, 1 = yes), on a native plant species (0 = no, 1 = yes), and the behavioral response of fruit-eating birds (0 = no response, 1 = attracted) are included. Japanese white-eye (jawe), Red-billed leiothrix (rble), Red-vented bulbul (rvbu), Red-whiskered bulbul (rwbu), and all non-fruit eating species (other). The data was collected on the Island of Oahu, Hawaii, USA from 06/2016 - 07/2017. Sampling took place across 26 plant species including native and exotic. Bird breeding season ranges from approximately March - August. 
 }
 \usage{data("cax_data")}
 \format{
@@ -25,7 +25,7 @@ The dataframe is a series of 80 experiments with control and treatment periods. 
     \item{\code{other}}{a numeric vector}
   }
 }
-\source{Data collected by Sean E. MacDonald; erroll4@illinois.edu}
+\source{Data collected by Sean E. MacDonald for master's thesis, University of Illinois at Urbana-Champaign; Contact author @ erroll4@illinois.edu}
 \examples{
 data(cax_data)
 str(cax_data)

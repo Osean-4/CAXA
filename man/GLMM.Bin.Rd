@@ -1,10 +1,10 @@
-\name{CAXA}
+\name{GLMM.Bin}
 \alias{Remove.WRSH.ZEDO}
 \alias{Keep.15.Tracks}
 \alias{GLMM.Bin}
-\title{Conspecific Attraction Data Analysis (CAXA)}
+\title{Generalized Linear Mixed Model (GLMM) with a Binary (Bin) Distribution}
 \description{
-The package contains three functions that help clean and analyze data. The Remove.WRSH.ZEDO function removes experiments containing trials of the track species White-rumped shama (WRSH) and Zebra dove (ZEDO) due to low sampling effort. The Keep.15.Tracks function keeps experiments containing trials equal to 15 minutes in order to standardize methodology and low sampling efforts with track lengths not equal to 15 minutes. Lastly, the GLMM.Bin function applys a generalized linear mixed model with a binary distribution to the data in order to see what bird species significantly respond to track species.
+The Remove.WRSH.ZEDO function removes experiments containing trials of the track species White-rumped shama (WRSH) and Zebra dove (ZEDO) due to low sampling effort. The Keep.15.Tracks function keeps experiments containing trials equal to 15 minutes in order to standardize methodology and low sampling efforts with track lengths not equal to 15 minutes. Lastly, the GLMM.Bin function applys a generalized linear mixed model with a binary distribution to the data in order to see what bird species significantly respond to track species.
 }
 \usage{
 Remove.WRSH.ZEDO(cax_data)
@@ -22,7 +22,6 @@ A cleaned dataframe containing conspecific attraction experiments on fruit-eatin
 A cleaned dataframe containing conspecific attraction experiments on fruit-eating birds minus experiments containing certain track species (i.e. wrsh, zedo) and trials with track lengths not equaling 15 minutes. 
 }
 }
-\details{This package can be applied to any study utilizing a behavioral stimulus to investigate an organism's response.}
 \value{
 The function Remove.WRSH.ZEDO(cax_data) will return a dataframe with all experiments containing track species wrsh and zedo removed.
 
@@ -34,7 +33,6 @@ GLMM.Bin(cax_data_2) will utilize the cleaned dataframe created by functions Rem
 \author{Sean E. MacDonald; University of Illinois at Urbana-Champaign}
 \note{Contact author @ erroll4@illinois.edu}
 \examples{
-## Load the required packages and dataset
 library(CAXA)
 library(lme4)
 library(dplyr)
