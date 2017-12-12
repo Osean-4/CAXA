@@ -6,3 +6,5 @@
 ^CAXA.rproj$
 ^.Rhistory$
 ^.RData$
+^.*\.Rproj$
+^\.Rproj\.user$
