@@ -1,0 +1,24 @@
+%\VignetteIndexEntry{A Tutorial for CAXA}
+\documentclass{article}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+The package contains three functions that clean the data of any unwanted experiments. Firstly, data containing trials of the species White-rumped shama and Zebra dove are removed due to low sampling effort. Secondly, data containing trials not equal to 15 minutes are removed due to low sampling effort. Lastly, a generalized linear mixed model is applied to the data.
+<<>>=
+library(CAXA)
+library(lme4)
+library(dplyr)
+data("cax_data")
+## Remove all experiments with wrsh or zedo as track species
+cax_data_1 <- Remove.WRSH.ZEDO(cax_data)
+
+## Keep only experiments with all trials of track lengths equal to 15 minutes
+cax_data_2 <- Keep.15.Tracks(cax_data_1)
+
+## Apply a generalized linear mixed model with a binomial distribution
+## For each glmm have bird species as response variable; track species, breeding season, and plant origin as fixed effects; order as random effect
+GLMM.Bin(cax_data_2)
+@
+
+\end{document}
