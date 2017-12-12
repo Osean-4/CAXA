@@ -1,4 +1,5 @@
 \name{CAXA}
+\alias{CAXA}
 \alias{Remove.WRSH.ZEDO}
 \alias{Keep.15.Tracks}
 \alias{GLMM.Bin}

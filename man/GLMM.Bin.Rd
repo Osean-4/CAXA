@@ -1,10 +1,10 @@
 \name{GLMM.Bin}
-\alias{Remove.WRSH.ZEDO}
-\alias{Keep.15.Tracks}
 \alias{GLMM.Bin}
+\alias{Keep.15.Tracks}
+\alias{Remove.WRSH.ZEDO}
 \title{Generalized Linear Mixed Model (GLMM) with a Binary (Bin) Distribution}
 \description{
-The Remove.WRSH.ZEDO function removes experiments containing trials of the track species White-rumped shama (WRSH) and Zebra dove (ZEDO) due to low sampling effort. The Keep.15.Tracks function keeps experiments containing trials equal to 15 minutes in order to standardize methodology and low sampling efforts with track lengths not equal to 15 minutes. Lastly, the GLMM.Bin function applys a generalized linear mixed model with a binary distribution to the data in order to see what bird species significantly respond to track species.
+The GLMM.Bin function applys a generalized linear mixed model with a binary distribution to the data in order to see what bird species significantly respond to track species.
 }
 \usage{
 Remove.WRSH.ZEDO(cax_data)
@@ -23,10 +23,6 @@ A cleaned dataframe containing conspecific attraction experiments on fruit-eatin
 }
 }
 \value{
-The function Remove.WRSH.ZEDO(cax_data) will return a dataframe with all experiments containing track species wrsh and zedo removed.
-
-The function Keep.15.Tracks(cax_data_1) will utilize the output of the Remove.WRSH.ZEDO function and return a dataframe with only experiments containing track lengths equal to 15 minutes.
-
 GLMM.Bin(cax_data_2) will utilize the cleaned dataframe created by functions Remove.WRSH.ZEDO and Keep.15.Bin and return a summary of coefficients from a generalized linear mixed model applied to the track species Japanese white-eye (jawe).
 }
 \references{https://github.com/Osean-4/Final.Project}

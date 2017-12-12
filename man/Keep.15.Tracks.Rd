@@ -3,7 +3,7 @@
 \alias{Remove.WRSH.ZEDO}
 \title{Keep All Experiments with a Track Length of 15 Minutes}
 \description{
-The Remove.WRSH.ZEDO function removes experiments containing trials of the track species White-rumped shama (WRSH) and Zebra dove (ZEDO) due to low sampling effort. The Keep.15.Tracks function keeps experiments containing trials equal to 15 minutes in order to standardize methodology and low sampling efforts with track lengths not equal to 15 minutes.
+The Keep.15.Tracks function keeps experiments containing trials equal to 15 minutes in order to standardize methodology and low sampling efforts with track lengths not equal to 15 minutes.
 }
 \usage{
 Remove.WRSH.ZEDO(cax_data)
