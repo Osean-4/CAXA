@@ -1,6 +1,6 @@
 Package: CAXA
 Type: Package
-Title: Conspecific Attraction Experiment Analysis
+Title: Conspecific Attraction Experiment Analysis (CAXA)
 Version: 0.1.0
 Author: Sean E. MacDonald
 Maintainer: Sean E. MacDonald <erroll4@illinois.edu>
