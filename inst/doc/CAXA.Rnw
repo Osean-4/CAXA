@@ -1,24 +1,128 @@
 %\VignetteIndexEntry{A Tutorial for CAXA}
 \documentclass{article}
-
+\usepackage{microtype}
 \begin{document}
+
+%---------------------------------------------------------------------------------------
+\title{A Tutorial for the package CAXA (conspecific attraction experiment analysis)}
+%---------------------------------------------------------------------------------------
+\author{Sean E. MacDonald}
+%\date{December 14th, 2017}
+\SweaveOpts{highlight=TRUE, tidy=TRUE, keep.space=TRUE, keep.blank.space=FALSE, keep.comment=TRUE}
 \SweaveOpts{concordance=TRUE}
+\maketitle
+%---------------------------------------------------------------------------------------
+\section{Introduction}
+%---------------------------------------------------------------------------------------
+The package contains three functions that help clean and analyze a specific dataset pertaining to a series of conspecific attraction experiments. These series of 80 experiments were designed to investigate the efficacy of attracting fruit-eating birds to fruiting plants. More specifically, these experiments tease apart whether or not birds in this system utilize social information (i.e. vocalizations) when making foraging decisions. And if so, do they rely on conspecific cues, heterospecific cues, or both? Do members within the frugivory dietarty guild utilize eavesdropping when exploiting resources? These are the questions this small study aimed to answer. Birds within 10 meters of the focal were recorded. The three functions are as follows:
 
-The package contains three functions that clean the data of any unwanted experiments. Firstly, data containing trials of the species White-rumped shama and Zebra dove are removed due to low sampling effort. Secondly, data containing trials not equal to 15 minutes are removed due to low sampling effort. Lastly, a generalized linear mixed model is applied to the data.
+The Remove.WRSH.ZEDO function removes experiments containing trials of the track species White-rumped shama (WRSH) and Zebra dove (ZEDO) due to low sampling effort. Low samples were taken due to diet analysis determining that these species are primarily insectivorous or don't respond to conspecific vocalizations.
+
+The Keep.15.Tracks function keeps experiments containing trials equal to 15 minutes in order to standardize methodology and low sampling efforts with track lengths not equal to 15 minutes. Preliminary experiments utilized various track lengths until a standardized methodology was implemented.
+
+The GLMM.Bin function applys a generalized linear mixed model (GLMM) with a binary (Bin) distribution to the data in order to see what bird species significantly respond to track species. Applying this type of model is necessary as the data is not normally distributed (generalized). Additionally, trials were not independent of one another meaning track order must be categorized as a random effect. Therefore, this model will contain both fixed and random effects, hence mixed.
+%---------------------------------------------------------------------------------------
+\section{Dataset}
+%---------------------------------------------------------------------------------------
+The dataset is a product of a series of 80 experiments conducted on the Island of Oahu, Hawaii, USA from June 2016 to July 2017. These experiments were designed to investigate the efficacy of attracting fruit-eating birds to fruiting plants. More specifically, on the island of Oahu all fruit eating birds are extinct, but several exotic birds have established populations across the islands. The study investigated whether these introduced birds could be enticed to consume fruit from exotic, native, and endangered plants. Sampling took place across 26 plant species with each experiment on a different individual. Birds were only recorded within 10 meters of focal plant due to low visibility in the cluttered forest. Bird breeding season ranges from approximately March - August in Hawaii. Many more data were collected that are not present in this dataset. Initial experiments utilized track species White-rumped shama (wrsh) and Zebra dove (zedo), but will be removed due to low sampling effort. Low samples were taken due to diet analysis determining that these species are primarily insectivorous or don't respond to conspecific vocalizations. Additionally, experiments with track lengths not equal to 15 minutes will be removed due to low sampling effort. Preliminary experiments utilized various track lengths until a standardized methodology was implemented. Control periods are divided into four, 15-min trials for proper comparision when applying a generalized linear mixed model (GLMM). Applying this type of model is necessary as the data is not normally distributed and that trials were not independent of one another. More specifically, the broadcasting of the first playback influences each subsequent trial and their respective birds' behavioral response strength. As such, track order must be accounted for as a random effect hence the mixed model approach. Fixed effects that were accounted for and of particular interest include breeding season, plant origin, and track species. The latter being the more important in order to determine if birds utilize social information only from their own species' vocalizations or others within their dietary guild (i.e. frugivores). 
+
+The dataframe contains 80 experiments across 624 rows and 12 columns. Each experiment consists of a control (con) and treatment (treat) period specified under track type. Control and treatment periods have specified lengths found under track length. Treatment trials have certain bird species calls associated under the track species column as either: Japanese white-eye (jawe), Japanese white-eye and Red-billed leiothrix (jawe.rble), Red-billed leiothrix (rble), Red-vented bulbul (rvbu), and Red-whiskered bulbul (rwbu). Control periods are denoted as 'con' under track species. Each trial is associated with an order found under track order. Whether or not an experiment was conducted during birds' breeding season (0 = no, 1 = yes) is denoted under the breeding.season column. Additionally, data regarding the plant species origin is denoted in the native plant column (0 = no, 1 = yes). Lastly, behavioral response to track species playback is denoted by each focal bird species (0 = no response, 1 = attracted): Japanese white-eye (jawe), Red-billed leiothrix (rble), Red-vented bulbul (rvbu), Red-whiskered bulbul (rwbu), and all non-fruit eating species (other).
+%---------------------------------------------------------------------------------------
+\section{Example}
+%---------------------------------------------------------------------------------------
 <<>>=
+## Load the required package and dataset
 library(CAXA)
-library(lme4)
-library(dplyr)
 data("cax_data")
-## Remove all experiments with wrsh or zedo as track species
+
+## Investigate track.spp to see how many experiments utilized 
+## each species; notice how few used wrsh and zedo; let's 
+## remove those few experiments
+table(cax_data$track.spp)
+
+## Remove all experiments with track species containing wrsh or 
+## zedo. The newly cleaned dataframe (cax_data_1) should contain 
+## 573 observations now
 cax_data_1 <- Remove.WRSH.ZEDO(cax_data)
+print(cax_data_1)
 
-## Keep only experiments with all trials of track lengths equal to 15 minutes
+## Investigate track.length to see how many experiments utilized 
+## different lengths; notice how most are 15 minutes long;
+## let's keep only those experiments
+table(cax_data$track.length)
+
+## Utilizing the cleaned dataframe (cax_data_1) from 
+## Remove.WRSH.ZEDO, this function will now Keep only experiments 
+## with all trials of track lengths equal to 15 minutes. The newly 
+## cleaned dataframe (cax_data_2) should contain 448 observations now
 cax_data_2 <- Keep.15.Tracks(cax_data_1)
+print(cax_data_2)
 
-## Apply a generalized linear mixed model with a binomial distribution
-## For each glmm have bird species as response variable; track species, breeding season, and plant origin as fixed effects; order as random effect
-GLMM.Bin(cax_data_2)
+## Utilizing the latest cleaned dataframe (cax_data_2), this function 
+## applys a generalized linear mixed model to Japanese white-eye (jawe)
+model1 <- GLMM.Bin(cax_data_2$jawe)
+
+## The output shows that Japanese white-eye (jawe), when present in the 
+## immediate area are significantly attracted to playbacks of jawe, 
+## jawe.rble, rble, and rvbu in comparison to the intercept (i.e. control). 
+## The breeding season or plant origin did not signigicantly influence 
+## strength of response. Interpretation: this species may use both 
+## conspecific and heterospecific vocalizations when making foraging 
+## decisions.
+summary(model1)
+
+## Utilizing the latest cleaned dataframe (cax_data_2), this function 
+## applys a generalized linear mixed model to Red-billed leiothrix (rble)
+model2 <- GLMM.Bin(cax_data_2$rble)
+
+## The output shows that Red-billed leiothrix (rble), when present in the 
+## immediate area are significantly attracted to playbacks of jawe.rble 
+## and rble in comparison to the intercept (i.e. control). The breeding 
+## season did not signigicantly influence strength of response, but 
+## plant origin did. Interpretation: this species may use conspecific 
+## vocalizations when making foraging decisions and prefer exotic plants.
+summary(model2)
+
+## Utilizing the latest cleaned dataframe (cax_data_2), this function 
+## applys a generalized linear mixed model to Red-vented bulbul (rvbu)
+model3 <- GLMM.Bin(cax_data_2$rvbu)
+
+## The output shows that Red-vented bulbul (rvbu), when present in the 
+## immediate area are significantly attracted to playbacks of jawe.rble 
+## and rvbu in comparison to the intercept (i.e. control). Plant origin 
+## did not signigicantly influence strength of response, but breeding 
+## season did. Interpretation: this species may use both 
+## conspecific and heterospecific vocalizations when making foraging 
+## decisions and be more gregarious during the breeding season.
+summary(model3)
+
+## Utilizing the latest cleaned dataframe (cax_data_2), this function 
+## applys a generalized linear mixed model to Red-whiskered bulbul (rwbu)
+model4 <- GLMM.Bin(cax_data_2$rwbu)
+
+## The output shows that Red-whiskered bulbul (rwbu), when present in the 
+## immediate area are significantly attracted to playbacks of rwbu in 
+## comparison to the intercept (i.e. control). Plant origin did not 
+## signigicantly influence strength of response, but breeding season did.
+## Interpretation: this species may use conspecific vocalizations when 
+## making foraging decisions and be more grergarious during the breeding
+## season.
+summary(model4)
+
+## Utilizing the latest cleaned dataframe (cax_data_2), this function 
+## applys a generalized linear mixed model to non-frugivorous birds (other)
+model5 <- GLMM.Bin(cax_data_2$other)
+
+## The output shows that non-frugivorous birds (other), when present in 
+## the immediate area ara significantly attracted to playbacks of 
+## jawe.rble in comparison to the intercept (i.e. control). Plant origin 
+## did not signigicantly influence strength of response, but breeding 
+## season did. Interpretation: these species may respond to alarm 
+## vocalizations of heterospecifics.
+summary(model5)
 @
-
+%---------------------------------------------------------------------------------------
+\section{Contact Information}
+%---------------------------------------------------------------------------------------
+Please contact author via email: erroll4@illinois.edu
 \end{document}

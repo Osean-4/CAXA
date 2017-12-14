@@ -30,16 +30,8 @@ Keep.15.Tracks <- function(cax_data_1, track.length.keep = "15"){
 ## and rvbu significantly attract Japanese white-eyes in comparison to 
 ## the intercept (i.e. control). The breeding season and plant origin did 
 ## not signigicantly influence strength of response.
-GLMM.Bin <- function(cax_data_2){
-  model1 <- glmer(jawe ~ track.spp + breeding.season + native.plant + 
-                    (1 | track.order), data = cax_data_2, family = "binomial")
-  model2 <- glmer(rble ~ track.spp + breeding.season + native.plant + 
-                    (1 | track.order), data = cax_data_2, family = "binomial")
-  model3 <- glmer(rvbu ~ track.spp + breeding.season + native.plant + 
-                    (1 | track.order), data = cax_data_2, family = "binomial")
-  model4 <- glmer(rwbu ~ track.spp + breeding.season + native.plant + 
-                    (1 | track.order), data = cax_data_2, family = "binomial")
-  model5 <- glmer(other ~ track.spp + breeding.season + native.plant + 
-                    (1 | track.order), data = cax_data_2, family = "binomial")
-  return(c(model1, model2, model3, model4, model5))
+GLMM.Bin <- function(bird.spp){
+  model <- glmer(bird.spp ~ track.spp + breeding.season + native.plant + 
+            (1 | track.order), data = cax_data_2, family = "binomial")
+  summary(model)
 }

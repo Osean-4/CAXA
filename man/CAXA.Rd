@@ -15,9 +15,9 @@ The GLMM.Bin function applys a generalized linear mixed model (GLMM) with a bina
 
 }
 \usage{
-Remove.WRSH.ZEDO(cax_data)
-Keep.15.Tracks(cax_data_1)
-GLMM.Bin(cax_data_2)
+Remove.WRSH.ZEDO(cax_data, track.spp.remove = "wrsh" | "zedo")
+Keep.15.Tracks(cax_data_1, track.length.keep = "15")
+GLMM.Bin(bird.spp)
 }
 \arguments{
   \item{cax_data}{
@@ -26,8 +26,14 @@ A dataframe containing all conspecific attraction experiments (cax) collected on
   \item{cax_data_1}{
 A cleaned dataframe containing conspecific attraction experiments on fruit-eating birds minus experiments containing certain track species (i.e. wrsh, zedo).
 }
-  \item{cax_data_2}{
-A cleaned dataframe containing conspecific attraction experiments on fruit-eating birds minus experiments containing certain track species (i.e. wrsh, zedo) and trials with track lengths not equaling 15 minutes. 
+  \item{track.spp.remove}{
+An object containing the track species to be removed from the dataframe cax_data.
+}
+  \item{track.length.keep}{
+An object containing track lengths to be kept from the dataframe caxa_data_1.
+}
+\item{bird.spp}{
+An object containing bird species from the dataframe caxa_data_2.
 }
 }
 \details{This package utilizes a specific dataset in order to run properly. For better understanding regarding this package's functionality please see code{link{caxa_data}}
@@ -37,7 +43,7 @@ The function Remove.WRSH.ZEDO(cax_data) will return a dataframe with all experim
 
 The function Keep.15.Tracks(cax_data_1) will utilize the output of the Remove.WRSH.ZEDO function and return a dataframe with only experiments containing track lengths equal to 15 minutes. This function focuses on the track.length variable.
 
-GLMM.Bin(cax_data_2) will utilize the cleaned dataframe created by functions Remove.WRSH.ZEDO and Keep.15.Bin. Additionally, the function will apply a generalized linear mixed model (GLMM) to the track species Japanese white-eye (jawe), Red-billed leiothrix (rble), Red-vented bulbul (rvbu), Red-whiskered bulbul (rwbu), and all non-fruit eating species (other). Lastly, the function will return a summary of coefficients from each model respectively called model1, model2, model3, model4, and model5. 
+GLMM.Bin(bird.spp) will utilize the cleaned dataframe created by functions Remove.WRSH.ZEDO and Keep.15.Bin. Additionally, the function will apply a generalized linear mixed model (GLMM) to the track species Japanese white-eye (jawe), Red-billed leiothrix (rble), Red-vented bulbul (rvbu), Red-whiskered bulbul (rwbu), and all non-fruit eating species (other). Lastly, the function will return a summary of coefficients from each model respectively called model1, model2, model3, model4, and model5. 
 }
 \references{https://github.com/Osean-4/Final.Project}
 \author{Sean E. MacDonald; University of Illinois at Urbana-Champaign}
@@ -46,9 +52,6 @@ GLMM.Bin(cax_data_2) will utilize the cleaned dataframe created by functions Rem
 ## Load the required package and dataset
 library(CAXA)
 data("cax_data")
-
-## Check out the dataframe
-View(cax_data)
 
 ## Investigate track.spp to see how many experiments utilized 
 ## each species; notice how few used wrsh and zedo; let's 
@@ -74,11 +77,8 @@ cax_data_2 <- Keep.15.Tracks(cax_data_1)
 print(cax_data_2)
 
 ## Utilizing the latest cleaned dataframe (cax_data_2), this function 
-## applys a generalized linear mixed model with a binomial distribution 
-## and will create five models total; one for each bird species or group.
-## Bird species is the response variable; track species, breeding season, 
-## and plant origin are fixed effects; order is the one random effect. 
-GLMM.Bin(cax_data_2)
+## applys a generalized linear mixed model to Japanese white-eye (jawe)
+model1 <- GLMM.Bin(cax_data_2$jawe)
 
 ## The output shows that Japanese white-eye (jawe), when present in the 
 ## immediate area are significantly attracted to playbacks of jawe, 
@@ -89,6 +89,10 @@ GLMM.Bin(cax_data_2)
 ## decisions.
 summary(model1)
 
+## Utilizing the latest cleaned dataframe (cax_data_2), this function 
+## applys a generalized linear mixed model to Red-billed leiothrix (rble)
+model2 <- GLMM.Bin(cax_data_2$rble)
+
 ## The output shows that Red-billed leiothrix (rble), when present in the 
 ## immediate area are significantly attracted to playbacks of jawe.rble 
 ## and rble in comparison to the intercept (i.e. control). The breeding 
@@ -96,6 +100,10 @@ summary(model1)
 ## plant origin did. Interpretation: this species may use conspecific 
 ## vocalizations when making foraging decisions and prefer exotic plants.
 summary(model2)
+
+## Utilizing the latest cleaned dataframe (cax_data_2), this function 
+## applys a generalized linear mixed model to Red-vented bulbul (rvbu)
+model3 <- GLMM.Bin(cax_data_2$rvbu)
 
 ## The output shows that Red-vented bulbul (rvbu), when present in the 
 ## immediate area are significantly attracted to playbacks of jawe.rble 
@@ -106,6 +114,10 @@ summary(model2)
 ## decisions and be more gregarious during the breeding season.
 summary(model3)
 
+## Utilizing the latest cleaned dataframe (cax_data_2), this function 
+## applys a generalized linear mixed model to Red-whiskered bulbul (rwbu)
+model4 <- GLMM.Bin(cax_data_2$rwbu)
+
 ## The output shows that Red-whiskered bulbul (rwbu), when present in the 
 ## immediate area are significantly attracted to playbacks of rwbu in 
 ## comparison to the intercept (i.e. control). Plant origin did not 
@@ -114,6 +126,10 @@ summary(model3)
 ## making foraging decisions and be more grergarious during the breeding
 ## season.
 summary(model4)
+
+## Utilizing the latest cleaned dataframe (cax_data_2), this function 
+## applys a generalized linear mixed model to non-frugivorous birds (other)
+model5 <- GLMM.Bin(cax_data_2$other)
 
 ## The output shows that non-frugivorous birds (other), when present in 
 ## the immediate area ara significantly attracted to playbacks of 

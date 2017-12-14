@@ -28,7 +28,7 @@ The dataset is a product of a series of 80 experiments conducted on the Island o
 \source{Data collected by Sean E. MacDonald for master's thesis in the Department of Natural Resources and Environmental Sciences, University of Illinois at Urbana-Champaign; Contact author @ erroll4@illinois.edu}
 \examples{
 data(cax_data)
-class(caX_data)
+class(cax_data)
 str(cax_data)
 }
 \keyword{datasets}
