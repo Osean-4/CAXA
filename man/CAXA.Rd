@@ -103,24 +103,23 @@ summary(model2)
 ## did not signigicantly influence strength of response, but breeding 
 ## season did. Interpretation: this species may use both 
 ## conspecific and heterospecific vocalizations when making foraging 
-## decisions.
+## decisions and be more gregarious during the breeding season.
 summary(model3)
 
 ## The output shows that Red-whiskered bulbul (rwbu), when present in the 
-## immediate area are significantly attracted to playbacks of jawe, 
-## jawe.rble, rble, and rvbu in comparison to the intercept (i.e. control). 
-## The breeding season and plant origin did not signigicantly influence 
-## strength of response. Interpretation: this species may use both 
-## conspecific and heterospecific vocalizations when making foraging 
-## decisions.
+## immediate area are significantly attracted to playbacks of rwbu in 
+## comparison to the intercept (i.e. control). Plant origin did not 
+## signigicantly influence strength of response, but breeding season did.
+## Interpretation: this species may use conspecific vocalizations when 
+## making foraging decisions and be more grergarious during the breeding
+## season.
 summary(model4)
 
-## The output shows that non-frugivorous birds (other), when present in the 
-## immediate area are not significantly attracted to any playback in 
-## comparison to the intercept (i.e. control). The breeding season and 
-## plant origin did not signigicantly influence 
-## strength of response. Interpretation: this species may use both 
-## conspecific and heterospecific vocalizations when making foraging 
-## decisions.
+## The output shows that non-frugivorous birds (other), when present in 
+## the immediate area ara significantly attracted to playbacks of 
+## jawe.rble in comparison to the intercept (i.e. control). Plant origin 
+## did not signigicantly influence strength of response, but breeding 
+## season did. Interpretation: these species may respond to alarm 
+## vocalizations of heterospecifics.
 summary(model5)
 }
