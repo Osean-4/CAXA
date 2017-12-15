@@ -4,7 +4,7 @@ Title: Conspecific Attraction Experiment Analysis (CAXA)
 Version: 0.1.0
 Author: Sean E. MacDonald
 Maintainer: Sean E. MacDonald <erroll4@illinois.edu>
-Description: The package contains three functions that clean the data of any unwanted experiments. Firstly, data containing trials of the species White-rumped shama and Zebra dove are removed due to low sampling effort. Secondly, data containing trials not equal to 15 minutes are removed due to low sampling effort. Lastly, a generalized linear mixed model is applied to the data.
+Description: The package contains four functions that help clean and analyze a specific dataset pertaining to a series of conspecific attraction experiments of birds on the Island of Oahu, Hawaii, USA from summer 2016 to summer 2017. 
 URL: https://github.com/Osean-4/CAXA
 License: GPL-3 + file LICENSE
 Imports:

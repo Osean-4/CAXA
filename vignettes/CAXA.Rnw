@@ -14,13 +14,15 @@
 %---------------------------------------------------------------------------------------
 \section{Introduction}
 %---------------------------------------------------------------------------------------
-The package contains three functions that help clean and analyze a specific dataset pertaining to a series of conspecific attraction experiments. These series of 80 experiments were designed to investigate the efficacy of attracting fruit-eating birds to fruiting plants. More specifically, these experiments tease apart whether or not birds in this system utilize social information (i.e. vocalizations) when making foraging decisions. And if so, do they rely on conspecific cues, heterospecific cues, or both? Do members within the frugivory dietarty guild utilize eavesdropping when exploiting resources? These are the questions this small study aimed to answer. Birds within 10 meters of the focal were recorded. The three functions are as follows:
+The package contains four functions that help clean and analyze a specific dataset pertaining to a series of conspecific attraction experiments. These series of 80 experiments were designed to investigate the efficacy of attracting fruit-eating birds to fruiting plants. More specifically, these experiments tease apart whether or not birds in this system utilize social information (i.e. vocalizations) when making foraging decisions. And if so, do they rely on conspecific cues, heterospecific cues, or both? Do members within the frugivory dietarty guild utilize eavesdropping when exploiting resources? These are the questions this small study aimed to answer. Birds within 10 meters of the focal were recorded. The three functions are as follows:
 
 The Remove.WRSH.ZEDO function removes experiments containing trials of the track species White-rumped shama (WRSH) and Zebra dove (ZEDO) due to low sampling effort. Low samples were taken due to diet analysis determining that these species are primarily insectivorous or don't respond to conspecific vocalizations.
 
 The Keep.15.Tracks function keeps experiments containing trials equal to 15 minutes in order to standardize methodology and low sampling efforts with track lengths not equal to 15 minutes. Preliminary experiments utilized various track lengths until a standardized methodology was implemented.
 
 The GLMM.Bin function applys a generalized linear mixed model (GLMM) with a binary (Bin) distribution to the data in order to see what bird species significantly respond to track species. Applying this type of model is necessary as the data is not normally distributed (generalized). Additionally, trials were not independent of one another meaning track order must be categorized as a random effect. Therefore, this model will contain both fixed and random effects, hence mixed.
+
+The Con.Treat.test function mutates the dataframe created by the Remove.WRSH.ZEDO and Keep.15.Tracks functions into a matrix that contains overall frugivore behavioral response to broadcasted playbacks (treatment) in comparision to control periods. This function achieves this by creating a new column by combining all responses of Japanese white-eye (jawe), Red-billed leiothrix (rble), Red-vented bulbul (rvbu), and Red-whiskered bulbul (rwbu). Then this function creates a new dataframe with a column of track type (control or treatment) and frugivore response (0 = absence, 1 = presence). Following this the function creates a table of four categories including absent / absent, absent / present, present / absent, and present / present then turns it into a matrix. Finally, the McNemar's Chi-squared test is applied to this matrix and its output generated.
 %---------------------------------------------------------------------------------------
 \section{Dataset}
 %---------------------------------------------------------------------------------------
@@ -57,6 +59,17 @@ table(cax_data$track.length)
 ## cleaned dataframe (cax_data_2) should contain 448 observations now
 cax_data_2 <- Keep.15.Tracks(cax_data_1)
 print(cax_data_2)
+
+## Mutate cax_data_2 into a new df with only the presence and absence of 
+## frugivores during control and treatment periods; first we make a new
+## cloumn combining all presence/absence data from all the frugivores;
+## next we make a df with columns track type and frugivore response;
+## then we make a matrix with just values of frugivore response as 
+## either absent & absent, absent & present, present & absent,
+## and present & present between control and treatment periods
+## Apply a Wilcoxon signed-rank test to frug.con.treat dataframe to test
+## if more frugivores where present during control or treatment periods
+Con.Treat.test(cax_data_2)
 
 ## Utilizing the latest cleaned dataframe (cax_data_2), this function 
 ## applys a generalized linear mixed model to Japanese white-eye (jawe)

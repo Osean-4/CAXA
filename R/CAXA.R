@@ -26,12 +26,33 @@ Keep.15.Tracks <- function(cax_data_1, track.length.keep = "15"){
 ## applys a generalized linear mixed model with a binomial distribution.
 ## Bird species is the response variable; track species, breeding season, 
 ## and plant origin as fixed effects; order as the one random effect. 
-## The output shows that the track species call's jawe, jawe.rble, rble, 
-## and rvbu significantly attract Japanese white-eyes in comparison to 
-## the intercept (i.e. control). The breeding season and plant origin did 
-## not signigicantly influence strength of response.
 GLMM.Bin <- function(bird.spp){
   model <- glmer(bird.spp ~ track.spp + breeding.season + native.plant + 
             (1 | track.order), data = cax_data_2, family = "binomial")
   summary(model)
+}
+
+## Mutate cax_data_2 into a new df with only the presence and absence of 
+## frugivores during control and treatment periods; first we make a new
+## cloumn combining all presence/absence data from all the frugivores;
+## next we make a df with columns track type and frugivore response;
+## then we make a matrix with just values of frugivore response as 
+## either absent & absent, absent & present, present & absent,
+## and present & present between control and treatment periods
+## Apply a Wilcoxon signed-rank test to frug.con.treat dataframe to test
+## if more frugivores where present during control or treatment periods
+Con.Treat.test <- function(cax_data_2){
+  cax_data_2$frugivore <- as.integer(cax_data_2$jawe|cax_data_2$rble|
+                        cax_data_2$rvbu|cax_data_2$rwbu)
+  cax_data_3 <- cax_data_2[,c(4,13)]
+  control <- subset(cax_data_3, track.type == "con")
+  treatment <- subset(cax_data_3, track.type == "treat")
+  cax_data_4 <- cbind(control, treatment)
+  frug.con.treat <- cax_data_4[,c(2,4)]
+  colnames(frug.con.treat) <- c("Control", "Treatment")
+  table(frug.con.treat)
+  cax_data_5 <- matrix(c(42, 22, 93, 67), nrow = 2, ncol = 2, byrow = FALSE,
+                dimnames = list(c("Control.absence", "Control.presence"),
+                c("Treatment.absence", "Treatment.presence")))
+mcnemar.test(cax_data_5)
 }
